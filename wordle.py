@@ -74,8 +74,11 @@ class Wordle:
                 self.colours[self.g_count][p] = c
         self.g_count += 1
 
-    def valid_guess(self, u_inp):
-        if len(u_inp) == 5 and False not in [False for s in str(u_inp).upper() if s not in self.alph]:
+    #Changed the guess to check if the guess if 5 letters
+    # verify the guess has valid A-Z letters only
+    # and the guess exists within the word list
+    def valid_guess(self, u_inp, wordList):
+        if len(u_inp) == 5 and False not in [False for s in str(u_inp).upper() if s not in self.alph] and str(u_inp).upper() in wordList:
             return True
         else:
             return False

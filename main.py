@@ -38,13 +38,13 @@ if 'T' in str(control).upper() or 'P' in str(control).upper():
             if 'P' in str(control).upper():
                 u_inp = input('\nPLEASE GUESS A 5 LETTER WORD\n')
             else:
-                u_inp = bot.choose_action()
-            if game.valid_guess(u_inp) == True:
+                u_inp = bot.choose_action(game.board, game.colours)
+            if game.valid_guess(u_inp, w_bank['words'].tolist()) == True:
                 game.update_board(u_inp)
                 if 'P' in str(control).upper():
                     print(game.colours[game.g_count-1])
             else:
-                print('ERROR - WORDS MUST BE 5 LETTERS')
+                print('ERROR - WORDS MUST BE 5 LETTERS AND IN WORD LIST')
         r = game.game_result()
         if 'P' in str(control).upper():
             if r[0] == True:
@@ -69,7 +69,7 @@ elif 'A' in str(control).upper():
     )
     bot = Agent(game)
     for i in range(ROWS):
-        guess = bot.choose_action()
+        guess = bot.choose_action(game.board, game.colours)
         print(f'\nSuggested Word = {guess}\n')
         u_inp = input('What were the colours returned [ex. ybggy]?\n')
         game.colours[i] = [s for s in str(u_inp).upper()]

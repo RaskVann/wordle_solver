@@ -43,7 +43,10 @@ class Agent:
                         self.g_letters.append(letter)
             self.g_letters = [l for l in self.g_letters if l not in self.y_letters and l not in self.prediction]
 
-    def choose_action(self):
+    #Additional arguments are of past guesses and their results, to be used if desired to improve future guesses
+    #Board = an array of all previous guesses, 6 long. Each a 6 long character array, empty if not guessed otherwise the character of the word
+    #colours = an array of all previous guesses, 6 long. Each a 6 long character array, empty if not guessed, or 'G','Y','B' if filled
+    def choose_action(self, board, colours):
         self.parse_board()
         if len(self.g_letters) > 0:
             self.w_bank = self.w_bank[~self.w_bank['words'].str.contains('|'.join(self.g_letters))]
@@ -68,4 +71,5 @@ class Agent:
             self.w_bank['w-score'] += self.w_bank['v-count'] / self.game.letters
         mv_bank = self.w_bank[self.w_bank['w-score']==self.w_bank['w-score'].max()]
         result = random.choice(mv_bank['words'].tolist())
+        #print(board, colours, result)      #View our previous guesses, what colour results we got, and the guess we're going with at each stage
         return result
